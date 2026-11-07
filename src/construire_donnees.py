@@ -1,9 +1,11 @@
 # Construction du jeu de données final : une ligne par jour, avec la demande
-# moyenne journalière, les températures des trois villes et le jour de la semaine.
+# moyenne journalière, les températures des trois villes, leur moyenne
+# et le jour de la semaine.
 
 from pathlib import Path
 import pandas as pd
 
+TEMPERATURES = ["temp_gatineau", "temp_montreal", "temp_quebec"]
 JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 
 DOSSIER = Path(__file__).resolve().parent.parent / "data" / "processed"
@@ -16,6 +18,10 @@ def main() -> None:
 
     # Fusion sur la date : on garde les jours présents dans les deux fichiers.
     donnees = demande.merge(temperatures, on="date", how="inner")
+
+    # Les trois températures sont très corrélées (0,98 à 0,99) : on les résume
+    # par leur moyenne simple, pour éviter la multicolinéarité dans le modèle.
+    donnees["temp_moyenne"] = donnees[TEMPERATURES].mean(axis=1).round(1)
     donnees["jour_semaine"] = [JOURS[i] for i in donnees["date"].dt.day_of_week]
 
     donnees.to_csv(FICHIER_SORTIE, index=False)
