@@ -184,7 +184,6 @@ def onglet_comprendre() -> None:
                "modèle évalué, ajusté sur 2019 à 2022.")
 
 
-# ---------------------------------------------------------------- Interface
 @st.cache_data
 def charger_previsions_2023() -> pd.DataFrame:
     """Les prévisions de l'année de test 2023 (modèle ajusté sur 2019-2022, voir evaluer_modele.py)."""
@@ -220,24 +219,23 @@ def onglet_fiabilite() -> None:
 
     st.image(str(DOSSIER_FIGURES / "reel_prevu_2023.png"),
              caption="Demande réelle et prévision du modèle, jour par jour, en 2023.")
-    st.image(str(DOSSIER_FIGURES / "erreur_selon_horizon.png"),
-             caption="Erreur de l'outil quand la température est une prévision météo, selon l'horizon.")
 
     st.subheader("Quand faire confiance à l'outil")
-    st.success("**En hiver, sur les 7 jours.** L'outil est le plus utile lors des grands froids. "
-               "Même avec une prévision météo à 7 jours, son erreur sur les jours froids reste "
-               "inférieure à celle de la climatologie.")
-    st.warning("**En saison douce, au-delà de 4 jours.** La demande dépend alors peu de la "
-               "température, et l'outil ne fait pas mieux qu'une moyenne historique. En 2023, il a "
-               "aussi surestimé la demande des mois doux, jusqu'à environ 1 100 MW en octobre, et son "
-               "intervalle à 90 % y sous-estime l'incertitude.")
+    st.success("**En hiver.** L'outil est le plus utile lors des grands froids : sur les jours les "
+               "plus froids de 2023, son erreur est inférieure de 63 % à celle de la climatologie, et "
+               "son intervalle à 90 % a contenu la demande réelle 94 % du temps en saison froide.")
+    st.warning("**En saison douce.** En 2023, l'outil a surestimé la demande des mois doux, jusqu'à "
+               "environ 1 100 MW en octobre, et son intervalle à 90 % n'a contenu la demande réelle "
+               "que 30 % du temps : il y sous-estime l'incertitude.")
     st.warning("**Au début et à la fin d'une vague de froid, et les jours fériés.** L'outil ignore "
                "l'inertie thermique des bâtiments et ne distingue pas les jours fériés, qui se "
                "comportent comme une fin de semaine.")
     st.info("**Mettre à jour le modèle régulièrement.** Ses données s'arrêtent fin 2023 ; le "
             "réajuster avec les données récentes recale le niveau de la demande, ce qui devrait "
             "réduire le biais observé pendant les mois doux.")
-    
+
+
+# ---------------------------------------------------------------- Interface
 st.set_page_config(page_title="Prévision de la demande d'électricité")
 st.title("Prévision de la demande d'électricité au Québec sur 7 jours")
 st.caption("Modèle en V : demande selon la température moyenne de Gatineau, Montréal "

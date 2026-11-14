@@ -62,7 +62,6 @@ brutes, exécuter les scripts dans cet ordre, depuis la racine du projet :
 | 8 | `src/evaluer_modele.py` | Ajuste le modèle sur 2019-2022 et le teste sur 2023 |
 | 9 | `src/analyser_erreurs.py` | Analyse les erreurs de 2023 |
 | 10 | `src/intervalles.py` | Calcule les intervalles à 90 % et leur couverture |
-| 11 | `src/simuler_meteo.py` | Simule l'effet des erreurs de prévision météo |
 
 Exemple : `python src/evaluer_modele.py`. Les étapes 1 et 2 demandent une connexion internet.
 
